@@ -13,12 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
-# from
+from django.conf import settings
+from django.conf.urls.static import static
+from vernaDjango.settings import MEDIA_ROOT, STATIC_ROOT
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',TemplateView.as_view(template_name='index.html'))
-    # path('/Suppliers/', Template)
+    path('',TemplateView.as_view(template_name='index.html')),
+    path('api/', include('api.urls')),
+
 ]
+urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT )
